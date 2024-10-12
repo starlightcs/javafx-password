@@ -6,7 +6,7 @@ https://www.jianshu.com/p/6b8b58ecc321
 #2. 再打成可执行文件
 jpackage --type exe -n DemoApp  -i D:\demo\target\lib --main-jar demo-1.0.jar --main-class com.example.demo.Launch --app-version 0.0.1 --dest D:\out --vendor allen --win-shortcut
 
-jpackage --type exe -n PasswordManagement  -i D:\demo\target\lib --main-jar demo-1.0.jar --main-class com.example.demo.Launch --app-version 0.0.1 --icon D:\demo\target\lib\TV.ico --dest D:\out --vendor allen --win-shortcut
+jpackage --type exe -n PasswordManagement  -i D:\demo\target\lib --main-jar demo-1.0.jar --main-class com.example.demo.Launch --app-version 0.0.1 --icon D:\demo\target\data\icon.ico --dest D:\out --vendor allen --win-shortcut
 
 --dest这个一定要指定，如果不指定默认会在当前目录陷入打包死循环，不要问我是怎么知道的，不知道是不是jpackage的bug(捂脸)，谨记。
 
