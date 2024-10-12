@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.demo.controller.GroupManagementController">
+    <top>
+        <HBox spacing="10">
+            <TextField fx:id="groupNameField" promptText="Group Name"/>
+            <Button text="Create Group" onAction="#onCreateGroupButtonClick"/>
+            <Button text="Edit Group" onAction="#onEditGroupButtonClick"/>
+            <Button text="Delete Group" onAction="#onDeleteGroupButtonClick"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ListView fx:id="groupListView" onMouseClicked="#onGroupSelected"/>
+    </center>
+</BorderPane>

@@ -1,0 +1,57 @@
+#教程地址
+https://www.jianshu.com/p/6b8b58ecc321
+
+#引入了其他三方依赖，使用非模块化打包
+#1. 先打成jar包  mvn clean package
+#2. 再打成可执行文件
+jpackage --type exe -n DemoApp  -i D:\demo\target\lib --main-jar demo-1.0.jar --main-class com.example.demo.Launch --app-version 0.0.1 --dest D:\out --vendor allen --win-shortcut
+
+jpackage --type exe -n PasswordManagement  -i D:\demo\target\lib --main-jar demo-1.0.jar --main-class com.example.demo.Launch --app-version 0.0.1 --icon D:\demo\target\lib\TV.ico --dest D:\out --vendor allen --win-shortcut
+
+--dest这个一定要指定，如果不指定默认会在当前目录陷入打包死循环，不要问我是怎么知道的，不知道是不是jpackage的bug(捂脸)，谨记。
+
+
+
+
+
+
+--type 或 -t <键入字符串>
+#要创建的包的类型
+#有效值为：{"app-image"， "exe"， "msi"， "rpm"， "deb"， "pkg"， "dmg"}
+#如果未指定此选项，则将创建一个与平台相关的默认类型。
+
+--name 或 -n <name>
+#应用程序和/或程序包的名称。
+
+-p . 代表当前路径
+
+-m 代表module-info.java里的模块名和包路径
+
+--vendor <字符串>
+#应用程序的供应商。
+
+--app-version <版本>
+#应用程序和/或软件包的版本
+
+--icon 图片路径
+
+--win-shortcut 生成桌面快捷图标   exe时有效
+
+
+直接运行Launch类的main方法就可以启动javafx项目了。
+
+非模块化的打包和模块化的打包命令是有点区别的，前期步骤都一样：
+1.先运行 clean package命令打出jar包
+2.把项目jar包移到target/lib目录下
+3.把图标ico复制到target/lib目录下
+4.用cmd打开target/lib 此时这里有所有的业务jar包和依赖包和图标ico文件
+运行以下命令：
+
+jpackage --type app-image -n DemoApp  -i D:\work\workspace2\hellofx\target\lib --main-jar hellofx-0.0.1.jar --main-class org.openjfx.hellofx.Launch --app-version 0.0.1 --icon ./TV.ico --dest D:\work\workspace2\out
+-i：指的是需要打包的输入地址
+--main-jar：业务jar包名称
+--main-class: 业务jar包里的启动类名称指定，只有在--main-jar指定之后，这个才有效。
+--dest:输出安装包的文件夹目录
+上面的文件夹地址换成自己真实的就ok.
+
+--dest这个一定要指定，如果不指定默认会在当前目录陷入打包死循环，不要问我是怎么知道的，不知道是不是jpackage的bug(捂脸)，谨记。
