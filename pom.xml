@@ -119,34 +119,6 @@
                 </executions>
             </plugin>
 
-            <!-- 复制数据库文件到输出目录 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/data</outputDirectory> <!-- 将数据库文件复制到打包目录的data目录下 -->
-                            <resources>
-                                <resource>
-                                    <directory>src/main/resources</directory> <!-- 假设数据库文件在resources下 -->
-                                    <includes>
-                                        <include>passwords.db</include>
-                                        <include>icon.ico</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- 构建jar包plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

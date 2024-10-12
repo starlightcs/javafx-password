@@ -5,10 +5,8 @@ import com.example.demo.domain.PasswordRecord;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,33 +20,28 @@ public class DatabaseHelper {
         try {
             Class.forName("org.sqlite.JDBC");
 
-            // 获取当前应用的安装目录（即 .exe 所在目录）
-            String installDir = System.getProperty("user.dir"); // 或 System.getProperty("java.class.path")，取决于打包工具
+            // 定义数据库文件的路径，例如项目根目录下的 passwords.db 文件
+            File dbFile = new File("passwords.db");
 
-            // 指定数据库文件相对于安装目录的路径
-            String dbFilePath = installDir + File.separator + "data" + File.separator + "passwords.db";
-
-            // 检查数据库文件是否存在
-            File dbFile = new File(dbFilePath);
+            // 检查数据库文件是否存在，如果不存在则从 resources 目录中复制
             if (!dbFile.exists()) {
-                // 如果数据库文件不存在，可以考虑复制一个初始数据库
-                try (InputStream inputStream = DatabaseHelper.class.getResourceAsStream("/passwords.db")) {
-                    if (inputStream == null) {
-                        throw new RuntimeException("初始化数据库文件丢失。");
-                    }
+                System.out.println("Database file not found, creating from resources.");
 
-                    // 创建目标目录
-                    Files.createDirectories(Paths.get(installDir, "data"));
-
-                    // 将资源中的数据库文件复制到安装目录
-                    Files.copy(inputStream, Paths.get(dbFilePath), StandardCopyOption.REPLACE_EXISTING);
+                // 从 resources 目录中获取数据库文件
+                InputStream inputStream = DatabaseHelper.class.getResourceAsStream("/passwords.db");
+                if (inputStream == null) {
+                    throw new FileNotFoundException("Database file not found in resources.");
                 }
+
+                // 将资源中的数据库文件复制到目标位置
+                Files.copy(inputStream, dbFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                inputStream.close();
             }
 
-            // 使用安装目录中的数据库文件进行连接
+            // 使用该路径连接 SQLite 数据库
             String url = "jdbc:sqlite:" + dbFile.getAbsolutePath();
             connection = DriverManager.getConnection(url);
-            System.out.println("连接到数据库成功，数据库路径：" + dbFile.getAbsolutePath());
+            System.out.println("Connected to the database successfully.");
 
         } catch (Exception e) {
             e.printStackTrace();
